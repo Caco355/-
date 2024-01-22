@@ -112,7 +112,7 @@ def run_de_py():
 
         # 保存到 12333.xlsx
         data = pd.DataFrame({'forbid': keywords})
-        excel_12333 = os.path.join(current_directory, "12333.xlsx")
+        excel_12333 = os.path.join(current_directory, "forbid.xlsx")
         with pd.ExcelWriter(excel_12333, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
             data.to_excel(writer, index=False, sheet_name='Sheet1')
 
