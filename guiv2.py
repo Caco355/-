@@ -9,10 +9,19 @@ import csv
 import pkg_resources
 import logging
 
+
+
 # 获取当前脚本所在的目录
 current_directory = os.path.dirname(sys.executable) if getattr(sys, 'frozen', False) else os.path.dirname(__file__)
 internal_folder = os.path.join(current_directory, "_internal")
 dependencies_folder = os.path.join(internal_folder, "dependencies")
+
+
+# 检查并创建"_interal"文件夹
+_internal_folder = os.path.join(current_directory, "_internal")
+if not os.path.exists(_internal_folder):
+    os.makedirs(_internal_folder)
+    logging.info(f"Created json folder at {_internal_folder}")
 
 # 检查并创建"json"文件夹
 json_folder = os.path.join(internal_folder, "json")
@@ -97,13 +106,13 @@ def run_de_py():
 
         # 保存到 weinames.xlsx
         weinames_data = pd.DataFrame({'公众号名称': gzh_names})
-        weinames_xlsx = os.path.join(internal_folder, "weinames.xlsx")
+        weinames_xlsx = os.path.join(current_directory, "weinames.xlsx")
         with pd.ExcelWriter(weinames_xlsx, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
             weinames_data.to_excel(writer, index=False, sheet_name='Sheet1')
 
         # 保存到 12333.xlsx
         data = pd.DataFrame({'forbid': keywords})
-        excel_12333 = os.path.join(internal_folder, "12333.xlsx")
+        excel_12333 = os.path.join(current_directory, "12333.xlsx")
         with pd.ExcelWriter(excel_12333, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
             data.to_excel(writer, index=False, sheet_name='Sheet1')
 
@@ -153,7 +162,7 @@ def display_csv_contents():
         exe_path = pkg_resources.resource_filename(__name__, "")
 
         # 构建 final 文件夹的完整路径
-        final_folder = os.path.join(exe_path, "final")
+        final_folder = os.path.join(current_directory, "final")
 
         # 使用 filedialog 来选择要查看的 CSV 文件
         file_path = filedialog.askopenfilename(initialdir=final_folder, title="选择要查看的 CSV 文件", filetypes=[("CSV 文件", "*.csv")])
