@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 import csv
 
 # 读取Excel文件
-excel_data = pd.read_excel('12333.xlsx')  # 替换为您的Excel文件路径
+excel_data = pd.read_excel('forbid.xlsx')  # 替换为您的Excel文件路径
 # 假设您要比对的数据在某一列，例如名为'ColumnName'
 excel_items = excel_data['forbid'].tolist()
 
