@@ -9,13 +9,10 @@ import csv
 import pkg_resources
 import logging
 
-
-
 # 获取当前脚本所在的目录
 current_directory = os.path.dirname(sys.executable) if getattr(sys, 'frozen', False) else os.path.dirname(__file__)
 internal_folder = os.path.join(current_directory, "_internal")
 dependencies_folder = os.path.join(internal_folder, "dependencies")
-
 
 # 检查并创建"_interal"文件夹
 _internal_folder = os.path.join(current_directory, "_internal")
@@ -190,8 +187,26 @@ def display_csv_contents():
         messagebox.showerror("错误", f"无法打开文件: {str(e)}")
 
 
+
 view_csv_button = tk.Button(right_frame, text="查看结果", command=display_csv_contents)
-view_csv_button.pack()
+view_csv_button.pack(side='left', padx=1)
+
+# 打开结果CSV文件路径
+def display_csv_path():
+    try:
+        # 使用 pkg_resources 来获取可执行文件的资源路径
+        exe_path = pkg_resources.resource_filename(__name__, "")
+
+        # 构建 final 文件夹的完整路径
+        final_folder = os.path.join(current_directory, "final")
+	
+        # 打开资源管理器
+        os.system("explorer.exe %s" % final_folder)
+    except Exception as e:
+        messagebox.showerror("错误", f"无法打开文件夹: {str(e)}")
+
+open_csv_button = tk.Button(right_frame, text="打开文件夹", command=display_csv_path)
+open_csv_button.pack()
 
 # 启动主循环
 root.mainloop()
