@@ -61,7 +61,7 @@ for csv_file_name in csv_files:
 
                             # 将匹配的项和标题写入输出CSV文件
                             csv_writer.writerow([title, item, url])
-                            break
+                            #break
 
             except requests.RequestException as e:
                 print(f"请求 {url} 时出错: {e}")
